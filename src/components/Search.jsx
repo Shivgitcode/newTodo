@@ -5,18 +5,21 @@ import { useEffect } from "react";
 const Search = () => {
   const [input, setInput] = useState("");
   const [arr, setArr] = useState([]);
-  const len = arr.length;
+
   const [status, setStatus] = useState([]);
   console.log(arr.length);
-  useEffect(() => {
-    setStatus(new Array(arr.length).fill(false));
-  }, [arr]);
+  // useEffect(() => {
+  //   setStatus(new Array(arr.length).fill(false));
+  // }, [arr]);
 
   function changeHadler(evt) {
     setInput(evt.target.value);
   }
   function valueHandler() {
     setArr((prev) => [...prev, input]);
+    setStatus((newprev) => {
+      return [...newprev, false];
+    });
     console.log(status);
 
     setInput("");
