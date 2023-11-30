@@ -1,15 +1,36 @@
 import { useState } from "react";
 import List from "./List";
+import { useEffect } from "react";
 
 const Search = () => {
   const [input, setInput] = useState("");
   const [arr, setArr] = useState([]);
+  const len = arr.length;
+  const [status, setStatus] = useState([]);
+  console.log(arr.length);
+  useEffect(() => {
+    setStatus(new Array(arr.length).fill(false));
+  }, [arr]);
+
   function changeHadler(evt) {
     setInput(evt.target.value);
   }
   function valueHandler() {
     setArr((prev) => [...prev, input]);
+    console.log(status);
+
     setInput("");
+  }
+  function toggleHandler(index) {
+    setStatus((newstat) => {
+      return newstat.map((el, idx) => {
+        if (idx === index) {
+          return !el;
+        } else {
+          return el;
+        }
+      });
+    });
   }
   function todoHandler(el) {
     const string = el;
@@ -35,7 +56,13 @@ const Search = () => {
         className="border border-black"
       />
       <button onClick={valueHandler}>add</button>
-      <List value={arr} todoHandler={todoHandler} />
+      <List
+        value={arr}
+        todoHandler={todoHandler}
+        length={length}
+        toggleHandler={toggleHandler}
+        status={status}
+      />
     </div>
   );
 };
